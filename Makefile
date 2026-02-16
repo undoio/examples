@@ -23,6 +23,10 @@ aio: aio.c .libaio_h-stamp
 		$(CC) $(CFLAGS) $< -laio $(LDFLAGS) -o $@; \
 	fi
 
+bubble_sort: bubble_sort.c
+	@printf "CC\tbubble_sort\n"
+	$(CC) -g -O3 $< -o $@
+
 cache: cache.c 
 	@printf "CC\tcache\n"
 	$(verbose)$(CC) $(CFLAGS) $< -lm $(LDFLAGS) -o $@
