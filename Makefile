@@ -13,7 +13,7 @@ else
 endif
 
 .PHONY: all
-all: aio cache cache-cpp cache-distributed/cache-distributed cpubound deadlock hashtable hello-world linked-list malloc-var race simple sine stacksmash threads workers
+all: aio cache cache-cpp cpubound deadlock hashtable hello-world linked-list malloc-var race simple sine stacksmash threads workers
 
 aio: aio.c .libaio_h-stamp
 	@printf "CC\taio\n"
