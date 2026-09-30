@@ -13,7 +13,7 @@ else
 endif
 
 .PHONY: all
-all: aio cache cache-cpp cpubound deadlock hashtable hello-world linked-list malloc-var race simple sine stacksmash threads workers
+all: aio cache cache-cpp cpubound deadlock hashtable hello-world ledger linked-list malloc-var race simple sine stacksmash threads workers
 
 aio: aio.c .libaio_h-stamp
 	@printf "CC\taio\n"
@@ -39,10 +39,6 @@ cache-cpp: cache-cpp.cpp .cxx-version-check
 		$(CXX) $(CXXFLAGS) $< $(LDFLAGS) -o $@; \
 	fi
 
-cache-distributed/cache-distributed: cache-distributed/cache-distributed.c 
-	@printf "CC\tcache-distributed/cache-distributed\n"
-	$(verbose)$(CC) $(CFLAGS) $< -lm $(LDFLAGS) -o $@
-
 cpubound: cpubound.cpp .cxx-version-check
 	@printf "CXX\tcpubound\n"
 	$(verbose)if [ ! -e ".cxx-version-check" ]; then \
@@ -62,6 +58,14 @@ hashtable: hashtable.c
 hello-world: hello-world.c 
 	@printf "CC\thello-world\n"
 	$(verbose)$(CC) $(CFLAGS) $< $(LDFLAGS) -o $@
+
+ledger: ledger.cpp .cxx-version-check
+	@printf "CXX\tledger\n"
+	$(verbose)if [ ! -e ".cxx-version-check" ]; then \
+		printf "ERROR\tledger: C++ 11 support required\nC++11 (GCC >= $(CXX_VERSION_MIN)) is required to build this example.\n"; \
+	else \
+		$(CXX) $(CXXFLAGS) $< $(LDFLAGS) -o $@; \
+	fi
 
 linked-list: linked-list.c 
 	@printf "CC\tlinked-list\n"
@@ -102,12 +106,12 @@ workers: workers.c
 .PHONY: clean
 clean:
 	$(verbose)rm -f .libaio_h-stamp .cxx-version-check
-	$(verbose)rm -f aio cache cache-cpp cache-distributed/cache-distributed cpubound deadlock hashtable hello-world linked-list malloc-var race simple sine stacksmash threads workers
+	$(verbose)rm -f aio cache cache-cpp cpubound deadlock hashtable hello-world ledger linked-list malloc-var race simple sine stacksmash threads workers
 
 .PHONY: help
 help:
 	@echo "This Makefile can be used to build the example programs in this directory:"
-	@echo "    $$ make [aio|cache|cache-cpp|cache-distributed/cache-distributed|cpubound|deadlock|hashtable|hello-world|linked-list|malloc-var|race|simple|sine|stacksmash|threads|workers]"
+	@echo "    $$ make [aio|cache|cache-cpp|cpubound|deadlock|hashtable|hello-world|ledger|linked-list|malloc-var|race|simple|sine|stacksmash|threads|workers]"
 
 CXX_VERSION_MIN="4.8.1"
 CXX_VERSION=$(shell gcc --version | grep "gcc" | tr " " "\n" | grep -P "^\d+\.\d+\.\d+$$")
