@@ -1,6 +1,6 @@
 # This CMake file builds the example programs in this directory.
 
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.5)
 project(examples C CXX)
 
 INCLUDE(CheckIncludeFiles)
@@ -42,6 +42,8 @@ target_link_libraries(deadlock ${CMAKE_THREAD_LIBS_INIT})
 add_executable(hashtable hashtable.c)
 
 add_executable(hello-world hello-world.c)
+
+add_executable(ledger ledger.cpp)
 
 add_executable(linked-list linked-list.c)
 target_link_libraries(linked-list ${CMAKE_THREAD_LIBS_INIT})
